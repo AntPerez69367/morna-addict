@@ -14,10 +14,16 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "gatsby": "^2.21.22",
+    "gatsby-plugin-google-fonts": "^1.0.1",
+    "gatsby-plugin-sharp": "^2.6.3",
     "gatsby-source-filesystem": "^2.3.3",
+    "gatsby-source-sql": "git+https://github.com/mrfunnyshoes/gatsby-source-sql.git",
+    "gatsby-transformer-sharp": "^2.5.2",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "sqlite3": "^4.2.0"
   },
   "devDependencies": {
     "prettier": "2.0.5"
