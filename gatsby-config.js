@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   plugins: [
     {
@@ -43,13 +47,13 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-fonts`,
-      options: [
-        `roboto mono`,
-        `muli\:400,400i,700,700i`,
-      ],
-      display: "swap",
+      options: {
+        fonts: [`roboto mono`, `muli\:400,400i,700,700i`],
+        display: "swap",
+      },
     },
   ],
 }
