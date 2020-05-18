@@ -3,9 +3,7 @@ import Router from '@reach/router'
 
 const Routes = () => {
     return ( 
-        <Router>
-
-        </Router>
+        <div>Coming soon</div>
      );
 }
  
