@@ -38,10 +38,6 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-transformer-sharp`,
-    },
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
