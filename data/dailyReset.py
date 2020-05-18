@@ -13,3 +13,5 @@ if connection is not None:
     cur.execute(sql)
     connection.commit()
     connection.close
+
+print("Daily Reset")

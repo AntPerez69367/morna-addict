@@ -42,7 +42,6 @@ def update_player(connection, player):
         oldTotalXP = data[0][6]
         newTotalXP = player['TotalXP']
         difference = newTotalXP - oldTotalXP
-        print(data[0][7]+difference)
         data = (player['Vita'], player['Mana'], newTotalXP, data[0][7] + difference, data[0][0])
         sql = ''' UPDATE players
                   SET vita = ?,
