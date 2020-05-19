@@ -4,7 +4,11 @@ import re
 import json
 import math
 import sqlite3
+import time
 
+
+def currentTime():
+    return time.strftime('%m-%d-%Y_%H%M', time.localtime())
 
 def create_connection(db_file):
     connection = None
@@ -33,25 +37,28 @@ def update_player(connection, player):
         data = (player['Level'],player['Class'],player['Character'].title(),player['Vita'],player['Mana'],player['TotalXP'],0)    
         sql = ''' INSERT INTO players(level,class,name,vita,mana,totalXP,daily)
                   VALUES(?,?,?,?,?,?,?) '''
-
-        print("Adding data to the database: ", data)
         
+        print("[{0}] Adding player '{1}' to the database: {2}".format(currentTime(), player['Character'], data))
         cur.execute(sql, data)
     else:
         
         oldTotalXP = data[0][6]
         newTotalXP = player['TotalXP']
         difference = newTotalXP - oldTotalXP
-        data = (player['Vita'], player['Mana'], newTotalXP, data[0][7] + difference, data[0][0])
-        sql = ''' UPDATE players
+        daily = data[0][7] + difference
+        if difference != 0:
+            if daily > 0:
+                print("[{0}] Updating Character '{1}' DailyXP is now '{2}'".format(currentTime(), player['Character'], daily))
+            data = (player['Vita'], player['Mana'], newTotalXP, daily, data[0][0])
+            sql = ''' UPDATE players
                   SET vita = ?,
                   mana = ?,
                   totalXP = ?,
                   daily = ?
                   WHERE id = ? '''
 
-        cur.execute(sql, data)
-        connection.commit()
+            cur.execute(sql, data)
+            connection.commit()
     
     return cur.lastrowid
 
@@ -67,9 +74,8 @@ def get_character_data(connection):
     'Bishop', 'Druid', 'Medic', 'Crusader']
 
     for path in classes:
-        print(path)
-        url = 'https://www.mornatales.com/rankings/?class=%s'%path
-        print(url)
+        print("[{0}] Scraping '{1}' Data".format(currentTime(),path))
+        url = 'https://www.mornatales.com/rankings/?class={0}'.format(path)
         r = requests.get(url)
         table = pd.read_html(r.content)[0]
         playerData = table.to_dict('records')
@@ -148,6 +154,7 @@ def main():
         get_character_data(connection)
         connection.commit()
         connection.close()
+        print("[{0}] Scraping Complete".format(currentTime()))
     else:
         print("Exception: Cannot connect to the database.")
 
