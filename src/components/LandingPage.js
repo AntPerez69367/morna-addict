@@ -14,7 +14,6 @@ const useStyles = makeStyles({
 })
 const LandingPage = (props) => {
   const classes = useStyles()
-  console.log(props)
   return (
     <div className={classes.root}>
       <div className={classes.container}>

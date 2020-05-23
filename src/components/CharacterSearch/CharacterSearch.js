@@ -63,8 +63,6 @@ const CharacterSearch = () => {
     } else {
       setCharData(null)
     }
-
-    console.log(data)
   }
 
   const handleChange = event => {
