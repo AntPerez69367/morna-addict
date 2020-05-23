@@ -5,10 +5,7 @@ import { Router } from "@reach/router"
 
 const Index = () => (
   <Layout>
-    <Router>
-    <LandingPage path="/" />
-    </Router>
-    
+    <LandingPage/>
   </Layout>
   )
 
