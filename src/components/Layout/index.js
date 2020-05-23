@@ -14,13 +14,6 @@ const useStyles = makeStyles({
     backgroundColor: "#1F2833",
     activeColor: "#f7f7f7",
   },
-  pageArea: {
-    height: "auto",
-    position: 'relative',
-    width: "100%",
-    top: "200px",
-    left: "0px",
-  },
 })
 
 const Layout = ({ children }) => {
@@ -31,7 +24,7 @@ const Layout = ({ children }) => {
       <div className={classes.topMenu}>
       <Header />
       </div>
-      <main className={classes.pageArea}>{children}</main>
+      <main>{children}</main>
     </div>
   )
 }
