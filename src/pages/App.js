@@ -1,11 +1,12 @@
 import React from "react"
 import Calculator from "../components/Calculator"
 import { Router } from "@reach/router"
+import {withPrefix } from "gatsby"
 
-const App = () => {
+const App = (props) => {
   return (
         <Router>
-          <Calculator path="/app/calculator" />
+          <Calculator path={withPrefix('/app/calculator')} />
         </Router>
   )
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import LandingPage from "../components/LandingPage"
 
-const Index = () => (
+const Index = (props) => (
       <LandingPage />
 )
 
