@@ -5,17 +5,18 @@ import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
 import ButtonBase from "@material-ui/core/ButtonBase"
 import Typography from "@material-ui/core/Typography"
 import calculator from "../../images/icons/calculator.svg"
+import {Link} from '@reach/router'
 
 const useStyles = makeStyles({
   logo: {
-    height: "125px",
-    width: "100%",
-    marginTop: "12.5px",
-    marginLeft: "auto",
-    marginRight: "auto",
+    width: '250px',
+    height: '125px',
   },
   logoContainer: {
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '10px'
   },
   navigationBar: {
     height: "30px",
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
   },
 })
 
-const Navigation = () => {
+const Header = () => {
   const classes = useStyles()
   const menu = [
     {
@@ -56,19 +57,22 @@ const Navigation = () => {
       id: 1,
       title: "Calculators",
       icon: <img style={{paddingRight: '5px'}} alt="calculator icon" src={calculator} />,
-      path: "/calculators",
+      path: "/app/calculator",
     },
   ]
   return (
     <>
       <div className={classes.logoContainer}>
+        <Link to={'/'} >
         <img alt="logo" className={classes.logo} src={logoSVG} />
+        </Link>
       </div>
 
       <div className={classes.navigationBar}>
         {menu.map(item => {
           return (
             <ButtonBase key={item.id} focusRipple className={classes.headerMenu}>
+              <Link to={item.path}>
               <Typography
                 className={classes.buttonText}
                 component="div"
@@ -76,6 +80,7 @@ const Navigation = () => {
               >
                  {item.icon}{item.title}
               </Typography>
+              </Link>
             </ButtonBase>
           )
         })}
@@ -84,4 +89,4 @@ const Navigation = () => {
   )
 }
 
-export default Navigation
+export default Header

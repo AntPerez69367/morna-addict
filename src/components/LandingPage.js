@@ -1,24 +1,30 @@
 import React from "react"
-import Paper from "@material-ui/core/Paper"
 import { makeStyles } from "@material-ui/core/styles"
 import XpTable from "../components/XpList/XpTable"
+import CharacterSearch from "../components/CharacterSearch/CharacterSearch"
 
 const useStyles = makeStyles({
   root: {
-    display: "flex",
     margin: "auto",
     width: "50%",
   },
+  container: {
+    marginBottom: '25px',
+    },
 })
-const LandingPage = () => {
+const LandingPage = (props) => {
   const classes = useStyles()
+  console.log(props)
   return (
-  <Paper 
-  className={classes.root}
-  component='div'
-  >
-    <XpTable />
-  </Paper>)
+    <div className={classes.root}>
+      <div className={classes.container}>
+        <CharacterSearch />
+      </div>
+      <div className={classes.container}>
+        <XpTable />
+      </div>
+    </div>
+  )
 }
 
 export default LandingPage

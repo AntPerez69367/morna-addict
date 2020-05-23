@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Table from "@material-ui/core/Table"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableBody from "@material-ui/core/TableBody"
@@ -8,28 +8,40 @@ import { useStaticQuery, graphql } from "gatsby"
 import Typography from "@material-ui/core/Typography"
 import Paper from "@material-ui/core/Paper"
 import { makeStyles } from "@material-ui/core/styles"
+import CharacterDetails from '../CharacterSearch/CharacterDetails'
 
 const useStyles = makeStyles({
   tableHeader: {
     height: "25px",
     backgroundColor: "#0B0C10",
     fontFamily: "roboto mono",
-    color: '#66FCF1',
-    verticalAlign: 'middle',
+    color: "#66FCF1",
+    verticalAlign: "middle",
+  },
+  tableRow: {
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: "#f5f5f5",
+    },
   },
 })
 const XpTable = () => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [selectedRow, setSelectedRow] = useState(null)
   const { leaders } = useStaticQuery(
     graphql`
       query stats {
         leaders: allCharacters(
           sort: { fields: DailyXP, order: DESC }
-          limit: 15
+          limit: 10
           filter: { DailyXP: { gt: 0 } }
         ) {
           nodes {
             Name
+            Vita
+            Mana
+            TotalXP
             DailyXP
             Class
           }
@@ -39,37 +51,59 @@ const XpTable = () => {
   )
 
   const tableRows = leaders.nodes
+  const handleClick = name => {
+    if (open && name !== selectedRow) {
+      setSelectedRow(name)
+    } else {
+      setOpen(!open)
+      setSelectedRow(name)
+    }
+  }
 
   if (!tableRows) {
     return "No Data Found"
   }
-
+  let index = 0
   return (
-    <div style={{ width: "100%" }}>
-      <Typography className={classes.tableHeader} 
-      variant="subtitle2" align="center" component="div">
+    <>
+      <Typography
+        className={classes.tableHeader}
+        variant="subtitle2"
+        align="center"
+        component="div"
+      >
         Top XP Sold Today
       </Typography>
       <TableContainer component={Paper}>
         <Table size="small">
-          <TableBody>
-            {tableRows.map(row => {
-              return (
-                <TableRow key={row.Name}>
-                  <TableCell component="th" scope="row" align="left">
-                    {row.Class}
+          {tableRows.map(row => {
+            index += 1
+            return (
+              <TableBody key={`${row.Name}_container`}>
+                <TableRow
+                  selected={row.Name === selectedRow}
+                  className={classes.tableRow}
+                  key={`${row.Name}_row`}
+                  onClick={() => handleClick(row.Name)}
+                >
+                  <TableCell align="left">
+                    {index}. {row.Name} ({row.Class})
                   </TableCell>
-                  <TableCell align="left">{row.Name}</TableCell>
                   <TableCell align="center">{`${(
                     row.DailyXP / 1000000000
                   ).toFixed(3)}B`}</TableCell>
                 </TableRow>
-              )
-            })}
-          </TableBody>
+                {open && row.Name === selectedRow && (
+                  <TableRow key={`${row.Name}_details`}>
+                    <CharacterDetails open={open} character={row}/>
+                  </TableRow>
+                )}
+              </TableBody>
+            )
+          })}
         </Table>
       </TableContainer>
-    </div>
+    </>
   )
 }
 
