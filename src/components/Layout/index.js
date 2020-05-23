@@ -2,6 +2,7 @@ import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Helmet } from "react-helmet"
 import Header from "../Header"
+import View from "../View"
 
 const useStyles = makeStyles({
   topMenu: {
@@ -24,7 +25,9 @@ const Layout = ({ children }) => {
       <div className={classes.topMenu}>
       <Header />
       </div>
+      <View>
       <main>{children}</main>
+      </View>
     </div>
   )
 }

@@ -4,10 +4,6 @@ import XpTable from "../components/XpList/XpTable"
 import CharacterSearch from "../components/CharacterSearch/CharacterSearch"
 
 const useStyles = makeStyles({
-  root: {
-    margin: "auto",
-    width: "50%",
-  },
   container: {
     marginBottom: '25px',
     },
@@ -15,7 +11,7 @@ const useStyles = makeStyles({
 const LandingPage = (props) => {
   const classes = useStyles()
   return (
-    <div className={classes.root}>
+    <div>
       <div className={classes.container}>
         <CharacterSearch />
       </div>
