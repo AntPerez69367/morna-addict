@@ -8,6 +8,7 @@ const App = () => {
   return (
     <Layout>
       <Router basepath="/app">
+        <Error404Page default />
         <Calculator path="/calculator" />
       </Router>
     </Layout>
