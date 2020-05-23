@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
   view: {
-    maxWidth: "50%",
+    maxWidth: "85%",
     margin: "2rem auto 3rem",
     height: "auto",
     position: 'relative',
