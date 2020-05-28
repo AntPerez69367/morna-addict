@@ -2,34 +2,42 @@ import React from "react"
 import { Collapse } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import Typography from "@material-ui/core/Typography"
-import Divider from '@material-ui/core/Divider';
+import Divider from "@material-ui/core/Divider"
+import { Grid } from "@material-ui/core"
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    padding: '10px',
-    margin: 'auto',
-    alignItems: "center",
-    justifyContent: "space-between",
-    textAlign: "center",
+    width: "100%",
+    display: "block",
   },
   leftColumn: {
-    textAlign: 'left',
+    textAlign: "left",
   },
   rightColumn: {
-    textAlign: 'right',
-
-  }
+    textAlign: "right",
+  },
 })
 const CharacterDetails = props => {
   const { character, open, index, length } = props
   const classes = useStyles()
   return (
-    <Collapse in={open} style={{ display: "block" }}>
-      <div className={classes.root}>
-        <div className={classes.leftColumn}>
+    <Collapse className={classes.root} in={open}>
+      <Grid
+        container
+        direction="row"
+        justify="space-evenly"
+        alignItems="center"
+      >
+        <Grid
+          item
+          xs
+          container
+          justify="flex-start"
+          alignItems="flex-start"
+          direction="column"
+        >
           <Typography component="div" variant="subtitle2">
-            <b>Name</b>: {character.Class} {character.Name}
+            <b>Name</b>: {character.Name}
           </Typography>
           <Typography component="div" variant="subtitle2">
             <b>Vita</b>: {character.Vita}
@@ -37,16 +45,25 @@ const CharacterDetails = props => {
           <Typography component="div" variant="subtitle2">
             <b>Mana</b>: {character.Mana}
           </Typography>
-        </div>
-        <div className={classes.rightColumn}>
+        </Grid>
+        <Grid
+          item
+          xs
+          container
+          justify="flex-end"
+          alignItems="flex-end"
+          direction="column"
+        >
           <Typography component="div" variant="subtitle2">
-            <b>Total XP</b>: {(character.TotalXP / 1000000000).toFixed(3)} B
+            <b>Total XP</b>:{" "}
+            {parseFloat((character.TotalXP / 1000000000).toFixed(3))} B
           </Typography>
           <Typography component="div" variant="subtitle2">
-            <b>XP Sold Today</b>: {(character.DailyXP / 1000000000).toFixed(3)} B
+            <b>XP Today</b>:{" "}
+            {parseFloat((character.DailyXP / 1000000000).toFixed(3))} B
           </Typography>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
       {index !== length && <Divider variant="middle" />}
     </Collapse>
   )

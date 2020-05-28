@@ -2,11 +2,13 @@ import React from "react"
 import logoSVG from "../../images/logo.svg"
 import { makeStyles } from "@material-ui/core/styles"
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
-import HelpIcon from '@material-ui/icons/Help';
+import HelpIcon from "@material-ui/icons/Help"
 import ButtonBase from "@material-ui/core/ButtonBase"
 import Typography from "@material-ui/core/Typography"
 import calculator from "../../images/icons/calculator.svg"
 import { Link } from "@reach/router"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
 
 const useStyles = makeStyles({
   topMenu: {
@@ -29,9 +31,7 @@ const useStyles = makeStyles({
     marginTop: "10px",
   },
   navigationBar: {
-    height: "30px",
     width: "100%",
-    zIndex: "2",
     position: "relative",
     top: "250",
     left: "0",
@@ -53,8 +53,8 @@ const useStyles = makeStyles({
     fontSize: "18px",
   },
   link: {
-    textDecoration: 'none'
-  }
+    textDecoration: "none",
+  },
 })
 
 const Header = () => {
@@ -81,11 +81,7 @@ const Header = () => {
     {
       id: 2,
       title: "Mob Search",
-      icon: (
-        <HelpIcon
-          style={{ paddingRight: "5px" }}
-        />
-      ),
+      icon: <HelpIcon style={{ paddingRight: "5px" }} />,
       path: "/daily",
     },
   ]
@@ -97,28 +93,30 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className={classes.navigationBar}>
-        {menu.map(item => {
-          return (
-            <ButtonBase
-              key={item.id}
-              focusRipple
-              className={classes.headerMenu}
-            >
-              <Link className={classes.link} to={item.path}>
-                <Typography
-                  className={classes.buttonText}
-                  component="div"
-                  variant="subtitle2"
-                >
-                  {item.icon}
-                  {item.title}
-                </Typography>
-              </Link>
-            </ButtonBase>
-          )
-        })}
-      </div>
+      <AppBar className={classes.navigationBar} position="static">
+        <Toolbar variant="dense" disableGutters={true}>
+          {menu.map(item => {
+            return (
+              <ButtonBase
+                key={item.id}
+                focusRipple
+                className={classes.headerMenu}
+              >
+                <Link className={classes.link} to={item.path}>
+                  <Typography
+                    className={classes.buttonText}
+                    component="span"
+                    variant="subtitle2"
+                  >
+                    {item.icon}
+                    {item.title}
+                  </Typography>
+                </Link>
+              </ButtonBase>
+            )
+          })}
+        </Toolbar>
+      </AppBar>
     </div>
   )
 }

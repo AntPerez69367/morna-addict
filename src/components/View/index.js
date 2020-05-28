@@ -3,7 +3,9 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
   view: {
-    maxWidth: "85%",
+    display: 'flex',
+    width: '100%',
+    maxWidth: '600px',
     margin: "2rem auto 3rem",
     height: "auto",
     position: 'relative',
@@ -14,7 +16,7 @@ const useStyles = makeStyles({
 
 const View = ({ title, children }) => {
   const classes = useStyles()
-  return <section className={classes.view}>{children}</section>
+  return <div className={classes.view}>{children}</div>
 }
 
 export default View

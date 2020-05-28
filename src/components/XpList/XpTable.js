@@ -8,7 +8,8 @@ import { useStaticQuery, graphql } from "gatsby"
 import Typography from "@material-ui/core/Typography"
 import Paper from "@material-ui/core/Paper"
 import { makeStyles } from "@material-ui/core/styles"
-import CharacterDetails from '../CharacterSearch/CharacterDetails'
+import CharacterDetails from "../CharacterSearch/CharacterDetails"
+import { Grid } from "@material-ui/core"
 
 const useStyles = makeStyles({
   tableHeader: {
@@ -17,8 +18,10 @@ const useStyles = makeStyles({
     fontFamily: "roboto mono",
     color: "#66FCF1",
     verticalAlign: "middle",
+    width: "100%",
   },
   tableRow: {
+    width: "100%",
     "&:hover": {
       cursor: "pointer",
       backgroundColor: "#f5f5f5",
@@ -65,45 +68,58 @@ const XpTable = () => {
   }
   let index = 0
   return (
-    <>
-      <Typography
-        className={classes.tableHeader}
-        variant="subtitle2"
-        align="center"
-        component="div"
-      >
-        Top XP Sold Today
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table size="small">
-          {tableRows.map(row => {
-            index += 1
-            return (
-              <TableBody key={`${row.Name}_container`}>
-                <TableRow
-                  selected={row.Name === selectedRow}
-                  className={classes.tableRow}
-                  key={`${row.Name}_row`}
-                  onClick={() => handleClick(row.Name)}
-                >
-                  <TableCell align="left">
-                    {index}. {row.Name} ({row.Class})
-                  </TableCell>
-                  <TableCell align="center">{`${(
-                    row.DailyXP / 1000000000
-                  ).toFixed(3)}B`}</TableCell>
-                </TableRow>
-                {open && row.Name === selectedRow && (
-                  <TableRow key={`${row.Name}_details`}>
-                    <CharacterDetails open={open} character={row}/>
-                  </TableRow>
-                )}
-              </TableBody>
-            )
-          })}
-        </Table>
-      </TableContainer>
-    </>
+    <Grid container direction="column" justify="center" alignItems="stretch">
+      <Grid item container>
+        <Typography
+          className={classes.tableHeader}
+          variant="subtitle2"
+          align="center"
+          component="div"
+        >
+          Top XP Sold Today
+        </Typography>
+      </Grid>
+      <Grid item container>
+        <TableContainer className={classes.root} component={Paper}>
+          <Table size="small">
+            {tableRows.map(row => {
+              index += 1
+              return (
+                <>
+                  <TableBody key={`${row.Name}_container`}>
+                    <TableRow
+                      selected={row.Name === selectedRow}
+                      className={classes.tableRow}
+                      key={`${row.Name}_row`}
+                      onClick={() => handleClick(row.Name)}
+                    >
+                      <TableCell align="left">
+                        {index}. {row.Name} ({row.Class})
+                      </TableCell>
+                      <TableCell align="center">{`${(
+                        row.DailyXP / 1000000000
+                      ).toFixed(3)}B`}</TableCell>
+                    </TableRow>
+                    {open && row.Name === selectedRow && (
+                      <TableRow>
+                        <TableCell colspan={2}>
+                          <CharacterDetails
+                            open={open}
+                            character={row}
+                            index={0}
+                            length={1}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </>
+              )
+            })}
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   )
 }
 

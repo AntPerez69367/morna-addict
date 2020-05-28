@@ -1,31 +1,33 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
 import XpTable from "../components/XpList/XpTable"
 import CharacterSearch from "../components/CharacterSearch/CharacterSearch"
+import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    margin: 'auto',
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    width: '100%',
+    maxWidth: '600px',
+    margin: '0 auto'
   },
-  container: {
-    marginBottom: "25px",
+  search: {
+    width: '100%',
+    maxWidth: '600px',
+    marginBottom: '15px'
   },
+  table: {
+    width: '100%',
+    maxWidth: '600px',
+  }
 })
 const LandingPage = props => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <div>
-        <div className={classes.container}>
-          <CharacterSearch />
-        </div>
-        <div className={classes.container}>
-          <XpTable />
-        </div>
+      <div className={classes.search}>
+        <CharacterSearch />
+      </div>
+      <div className={classes.table}>
+        <XpTable />
       </div>
     </div>
   )
