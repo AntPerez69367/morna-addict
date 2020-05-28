@@ -20,9 +20,11 @@ const useStyles = makeStyles({
     verticalAlign: "middle",
     margin: "auto",
   },
+  inputBase: {
+    width: '97%'
+  },
   input: {
-    marginLeft: "theme.spacing(1)",
-    width: "93%",
+    marginLeft: "15px",
   },
   iconButton: {
     padding: "10px",
@@ -71,19 +73,35 @@ const CharacterSearch = () => {
 
   const handleChange = event => {
     setCharacter(event.target.value)
+    let character =event.target.value
+    if (character.length < 3){
+      setCharData(null)
+      return null
+    }
+
+    let data = query.allCharacters.nodes.filter(
+      char => char.Name.toLowerCase().includes(character.toLowerCase())
+    )
+
+    if (data.length > 0) {
+      setCharData(data)
+    } else {
+      setCharData(null)
+    }
   }
 
   return (
     <>
       <Paper component="form" square onSubmit={handleSubmit} className={classes.root}>
         <InputBase
-          className={classes.input}
+          className={classes.inputBase}
           id="search-query"
+          autoComplete='off'
           name="char"
           onChange={handleChange}
           placeholder="Character Search"
           inputProps={{
-            root: { marginLeft: "15px" },
+            className: classes.input,
             "aria-label": "Character Search",
           }}
         />
