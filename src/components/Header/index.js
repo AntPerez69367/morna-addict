@@ -2,6 +2,7 @@ import React from "react"
 import logoSVG from "../../images/logo.svg"
 import { makeStyles } from "@material-ui/core/styles"
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined"
+import HelpIcon from '@material-ui/icons/Help';
 import ButtonBase from "@material-ui/core/ButtonBase"
 import Typography from "@material-ui/core/Typography"
 import calculator from "../../images/icons/calculator.svg"
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     height: "30px",
     width: "100%",
     zIndex: "2",
-    position: "fixed",
+    position: "relative",
     top: "250",
     left: "0",
     backgroundColor: "#0B0C10",
@@ -48,9 +49,12 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     color: "#66FCF1",
-    fontFamily: "roboto mono",
+    fontFamily: "muli",
     fontSize: "18px",
   },
+  link: {
+    textDecoration: 'none'
+  }
 })
 
 const Header = () => {
@@ -74,11 +78,21 @@ const Header = () => {
       ),
       path: "/app/calculator",
     },
+    {
+      id: 2,
+      title: "Mob Search",
+      icon: (
+        <HelpIcon
+          style={{ paddingRight: "5px" }}
+        />
+      ),
+      path: "/daily",
+    },
   ]
   return (
     <div className={classes.topMenu}>
       <div className={classes.logoContainer}>
-        <Link to={"/"}>
+        <Link className={classes.link} to={"/"}>
           <img alt="logo" className={classes.logo} src={logoSVG} />
         </Link>
       </div>
@@ -91,7 +105,7 @@ const Header = () => {
               focusRipple
               className={classes.headerMenu}
             >
-              <Link to={item.path}>
+              <Link className={classes.link} to={item.path}>
                 <Typography
                   className={classes.buttonText}
                   component="div"

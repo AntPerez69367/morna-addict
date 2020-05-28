@@ -39,6 +39,13 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `caves`,
+        path: `${__dirname}/data/`
+      }
+    },
+    {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [`roboto mono`, `muli\:400,400i,700,700i`],
@@ -54,6 +61,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
+    },
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: `caves`
+      },
     },
   ],
 }
