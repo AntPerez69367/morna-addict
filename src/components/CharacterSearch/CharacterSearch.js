@@ -53,11 +53,17 @@ const CharacterSearch = () => {
 
   const handleSubmit = event => {
     event.preventDefault()
+    if (character.length < 3){
+      setCharData(null)
+      return null
+    }
+
     let data = query.allCharacters.nodes.filter(
-      char => char.Name.toLowerCase() === character.toLowerCase()
+      char => char.Name.toLowerCase().includes(character.toLowerCase())
     )
+
     if (data.length > 0) {
-      setCharData(data[0])
+      setCharData(data)
     } else {
       setCharData(null)
     }
@@ -90,7 +96,14 @@ const CharacterSearch = () => {
         </IconButton>
       </Paper>
       <Paper style={{paddingRight: '15px'}} square>
-        {charData && <CharacterDetails open={true} character={charData} />}
+        {charData && charData.map(char => 
+        <CharacterDetails 
+        key={`${char.Name}_details`}
+        open={true} 
+        character={char}
+        index={charData.indexOf(char)}
+        length={charData.length - 1 } />)
+        }
       </Paper>
     </>
   )
