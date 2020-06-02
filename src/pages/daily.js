@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { Paper } from "@material-ui/core"
-import { graphql } from "gatsby"
+import { Paper, Typography } from "@material-ui/core"
+import { Link, graphql } from "gatsby"
 import { makeStyles } from "@material-ui/styles"
 import { TextField } from "@material-ui/core"
 import CaveDisplay from "../components/CaveDisplay/CaveDisplay"
@@ -43,13 +43,14 @@ const DailyQuest = props => {
   return (
     <Paper className={classes.root}>
       <TextField
+        autoComplete="off"
         size="small"
         className={classes.inputBase}
         id="search-query"
         onChange={handleChange}
         label="Monster Search"
       />
-      {results &&
+      {results ?
         results.map(cave => {
           return (
             <>
@@ -57,7 +58,8 @@ const DailyQuest = props => {
               <Divider variant="middle" />
             </>
           )
-        })}
+        }) : <Typography align="center">Monster missing from this list? Add it <a href="https://github.com/MornaAddict/morna-json-data">Here</a></Typography>
+      }
     </Paper>
   )
 }
