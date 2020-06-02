@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Paper, Typography } from "@material-ui/core"
 import { Link, graphql } from "gatsby"
 import { makeStyles } from "@material-ui/styles"
@@ -6,6 +6,7 @@ import { TextField } from "@material-ui/core"
 import CaveDisplay from "../components/CaveDisplay/CaveDisplay"
 import Divider from "@material-ui/core/Divider"
 import PropTypes from "prop-types"
+import cloneDeep from "lodash/cloneDeep"
 
 const useStyles = makeStyles({
   root: {
@@ -25,16 +26,24 @@ const DailyQuest = props => {
 
   const handleChange = event => {
     let monster = event.target.value
-    let mobdata = (mobdata = caveData.filter(cave =>
-      cave.mobs.some(mobs =>
-        mobs.name.toLowerCase().includes(monster.toLowerCase())
+    let filterData = cloneDeep(caveData)
+    if (monster.length > 0) {
+      let mobdata = filterData.filter(cave =>
+        cave.mobs.some(mobs =>
+          mobs.name.toLowerCase().includes(monster.toLowerCase())
+        )
       )
-    ))
-    if (mobdata.length > 0) {
-      mobdata.forEach(cave => {
-        cave.mobs = cave.mobs.filter(mob => mob.name.toLowerCase().includes(monster.toLowerCase()))
-      })
-      setResults(mobdata)
+
+      if (mobdata && mobdata.length > 0) {
+        mobdata.forEach(cave => {
+          cave.mobs = cave.mobs.filter(mob =>
+            mob.name.toLowerCase().includes(monster.toLowerCase())
+          )
+        })
+        setResults(mobdata)
+      } else {
+        setResults(null)
+      }
     } else {
       setResults(null)
     }
@@ -50,7 +59,7 @@ const DailyQuest = props => {
         onChange={handleChange}
         label="Monster Search"
       />
-      {results ?
+      {results ? (
         results.map(cave => {
           return (
             <>
@@ -58,8 +67,13 @@ const DailyQuest = props => {
               <Divider variant="middle" />
             </>
           )
-        }) : <Typography align="center">Monster missing from this list? Add it <a href="https://github.com/MornaAddict/morna-json-data">Here</a></Typography>
-      }
+        })
+      ) : (
+        <Typography align="center">
+          Monster missing from this list? Add it{" "}
+          <a href="https://github.com/MornaAddict/morna-json-data">Here</a>
+        </Typography>
+      )}
     </Paper>
   )
 }
