@@ -1,18 +1,18 @@
-import React, { useState } from "react"
-import { Collapse } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-import Typography from "@material-ui/core/Typography"
-import { Grid } from "@material-ui/core"
-import Divider from "@material-ui/core/Divider"
+import React, { useState } from 'react'
+import { Collapse } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import { Grid } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
   root: {
-    padding: "15px",
+    padding: '15px',
   },
   mobDisplay: {
-    padding: "5px",
-    display: "flex",
-    alignItems: "center",
+    padding: '5px',
+    display: 'flex',
+    alignItems: 'center',
   },
 })
 
@@ -43,7 +43,11 @@ const CaveDisplay = props => {
       </Grid>
 
       {selected && (
-        <Collapse onClick={()=>setSelected(!selected)} className={classes.mobDisplay} in={selected}>
+        <Collapse
+          onClick={() => setSelected(!selected)}
+          className={classes.mobDisplay}
+          in={selected}
+        >
           <Grid
             container
             item
@@ -51,10 +55,9 @@ const CaveDisplay = props => {
             justify="flex-start"
             alignItems="center"
           >
-              
             {cave.mobs.map(mob => {
               return (
-                <Grid item>
+                <Grid key={`${mob.name}_grid`} item>
                   <Typography>{mob.name}</Typography>
                 </Grid>
               )
@@ -64,6 +67,10 @@ const CaveDisplay = props => {
       )}
     </Grid>
   )
+}
+
+CaveDisplay.propTypes = {
+  cave: PropTypes.object.isRequired,
 }
 
 export default CaveDisplay

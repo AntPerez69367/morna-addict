@@ -1,40 +1,39 @@
-import React, { useState } from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import Paper from "@material-ui/core/Paper"
-import { makeStyles } from "@material-ui/styles"
-import { TextField } from "@material-ui/core"
-import CharacterDetails from "./CharacterDetails"
+import React, { useState } from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import Paper from '@material-ui/core/Paper'
+import { makeStyles } from '@material-ui/styles'
+import { TextField } from '@material-ui/core'
+import CharacterDetails from './CharacterDetails'
 
 const useStyles = makeStyles({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    clear: "both",
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    clear: 'both',
   },
   header: {
-    height: "25px",
-    backgroundColor: "#0B0C10",
-    fontFamily: "roboto mono",
-    color: "#66FCF1",
-    verticalAlign: "middle",
-    margin: "auto",
+    height: '25px',
+    backgroundColor: '#0B0C10',
+    fontFamily: 'roboto mono',
+    color: '#66FCF1',
+    verticalAlign: 'middle',
+    margin: 'auto',
   },
   inputBase: {
-    width: "100%",
-    maxWidth: "600px",
+    width: '100%',
+    maxWidth: '600px',
   },
   input: {
-    marginLeft: "15px",
+    marginLeft: '15px',
   },
   iconButton: {
-    padding: "10px",
+    padding: '10px',
   },
 })
 
 const CharacterSearch = () => {
   const classes = useStyles()
-  const [character, setCharacter] = useState(null)
   const [charData, setCharData] = useState(null)
   const query = useStaticQuery(
     graphql`
@@ -51,11 +50,10 @@ const CharacterSearch = () => {
           }
         }
       }
-    `
+    `,
   )
 
   const handleChange = event => {
-    setCharacter(event.target.value)
     let character = event.target.value
     if (character.length < 3) {
       setCharData(null)
@@ -63,7 +61,7 @@ const CharacterSearch = () => {
     }
 
     let data = query.allCharacters.nodes.filter(char =>
-      char.Name.toLowerCase().includes(character.toLowerCase())
+      char.Name.toLowerCase().includes(character.toLowerCase()),
     )
 
     if (data.length > 0) {
@@ -85,7 +83,7 @@ const CharacterSearch = () => {
 
       {charData &&
         charData.map(char => (
-          <div>
+          <div key={`${char.Name}_div`}>
             <CharacterDetails
               key={`${char.Name}_details`}
               open={true}

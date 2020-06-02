@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/styles"
 import { TextField } from "@material-ui/core"
 import CaveDisplay from "../components/CaveDisplay/CaveDisplay"
 import Divider from "@material-ui/core/Divider"
+import PropTypes from "prop-types"
 
 const useStyles = makeStyles({
   root: {
@@ -24,18 +25,21 @@ const DailyQuest = props => {
 
   const handleChange = event => {
     let monster = event.target.value
-
-    let mobdata = caveData.filter(cave =>
+    let mobdata = (mobdata = caveData.filter(cave =>
       cave.mobs.some(mobs =>
         mobs.name.toLowerCase().includes(monster.toLowerCase())
       )
-    )
+    ))
     if (mobdata.length > 0) {
+      mobdata.forEach(cave => {
+        cave.mobs = cave.mobs.filter(mob => mob.name.toLowerCase().includes(monster.toLowerCase()))
+      })
       setResults(mobdata)
     } else {
       setResults(null)
     }
   }
+
   return (
     <Paper className={classes.root}>
       <TextField
@@ -45,14 +49,15 @@ const DailyQuest = props => {
         onChange={handleChange}
         label="Monster Search"
       />
-      {results && results.map(cave => {
-        return (
-          <>
-        <CaveDisplay key={`${cave.name}_display`} cave={cave} />
-        <Divider variant="middle" />
-        </>)
-      })
-    }
+      {results &&
+        results.map(cave => {
+          return (
+            <>
+              <CaveDisplay key={`${cave.name}_display`} cave={cave} />
+              <Divider variant="middle" />
+            </>
+          )
+        })}
     </Paper>
   )
 }
@@ -72,4 +77,9 @@ export const query = graphql`
     }
   }
 `
+
+DailyQuest.propTypes = {
+  data: PropTypes.array.isRequired,
+}
+
 export default DailyQuest

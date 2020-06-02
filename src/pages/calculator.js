@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react"
-import { Paper } from "@material-ui/core"
-import { makeStyles } from "@material-ui/styles"
-import TextField from "@material-ui/core/TextField"
-import Typography from "@material-ui/core/Typography"
+import React, { useState, useEffect } from 'react'
+import { Paper } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
   paper: {
-    width: "50%",
-    padding: "25px",
-    margin: "auto",
+    width: '50%',
+    padding: '25px',
+    margin: 'auto',
   },
   container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   vitaContainer: {
-    margin: "5px",
+    margin: '5px',
   },
   manaContainer: {
-    margin: "5px",
+    margin: '5px',
   },
   input: {
-    margin: "10px",
-    flex: "50%",
-    alignItems: "center",
+    margin: '10px',
+    flex: '50%',
+    alignItems: 'center',
   },
   inputText: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   results: {
     display: 'block',
-    textAlign: "center",
-  }
+    textAlign: 'center',
+  },
 })
-const Calculator = props => {
+const Calculator = () => {
   const classes = useStyles()
   const [startVita, setStartVita] = useState(0)
   const [startMana, setStartMana] = useState(0)
@@ -43,10 +43,18 @@ const Calculator = props => {
   const [endMana, setEndMana] = useState(0)
   const [vitaXpNeeded, setVitaXpNeeded] = useState(0)
   const [manaXpNeeded, setManaXpNeeded] = useState(0)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (endVita > startVita) {
-      calculateVita()
+      if (startVita > 10000000 || endVita > 10000000) {
+        setError(
+          'Invalid entry for Vita. Maximum vita currently limited to 10mil.',
+        )
+      } else {
+        setError('')
+        calculateVita()
+      }
     } else {
       setVitaXpNeeded(0)
     }
@@ -54,7 +62,14 @@ const Calculator = props => {
 
   useEffect(() => {
     if (endMana > startMana) {
-      calculateMana()
+      if (startMana > 5000000 || endMana > 5000000) {
+        setError(
+          'Invalid entry for Mana. Maximum Mana currently limited to 5mil.',
+        )
+      } else {
+        setError('')
+        calculateMana()
+      }
     } else {
       setManaXpNeeded(0)
     }
@@ -62,22 +77,22 @@ const Calculator = props => {
 
   const textInputProps = {
     style: {
-      textAlign: "center",
+      textAlign: 'center',
     },
   }
   const handleChange = event => {
     switch (event.target.id) {
-      case "Vita-start":
-        setStartVita(Number(event.target.value.replace(/\D/, "")))
+      case 'Vita-start':
+        setStartVita(Number(event.target.value.replace(/\D/, '')))
         break
-      case "Vita-end":
-        setEndVita(Number(event.target.value.replace(/\D/, "")))
+      case 'Vita-end':
+        setEndVita(Number(event.target.value.replace(/\D/, '')))
         break
-      case "Mana-start":
-        setStartMana(Number(event.target.value.replace(/\D/, "")))
+      case 'Mana-start':
+        setStartMana(Number(event.target.value.replace(/\D/, '')))
         break
-      case "Mana-end":
-        setEndMana(Number(event.target.value.replace(/\D/, "")))
+      case 'Mana-end':
+        setEndMana(Number(event.target.value.replace(/\D/, '')))
         break
       default:
         break
@@ -89,9 +104,9 @@ const Calculator = props => {
     let futureTotalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
-    let vita = startVita - 100000
+    let vita = startVita <= 10000000 ? startVita - 100000 : 0
     while (vita > 0) {
-      let multiplier = Math.floor(numOfSells / 200) + 1
+      const multiplier = Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       vita -= 100
       currentTotalXP += costPerSell + multiplier * 2000000
@@ -99,9 +114,9 @@ const Calculator = props => {
 
     numOfSells = 0
     costPerSell = 20000000
-    vita = endVita - 100000
+    vita = endVita <= 10000000 ? endVita - 100000 : 0
     while (vita > 0) {
-      let multiplier = Math.floor(numOfSells / 200) + 1
+      const multiplier = Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       vita -= 100
       futureTotalXP += costPerSell + multiplier * 2000000
@@ -115,9 +130,9 @@ const Calculator = props => {
     let futureTotalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
-    let mana = startMana - 50000
+    let mana = startMana <= 5000000 ? startMana - 50000 : 0
     while (mana > 0) {
-      let multiplier = Math.floor(numOfSells / 200) + 1
+      const multiplier = Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       mana -= 50
       currentTotalXP += costPerSell + multiplier * 2000000
@@ -125,9 +140,9 @@ const Calculator = props => {
 
     numOfSells = 0
     costPerSell = 20000000
-    mana = endMana - 50000
+    mana = endMana <= 5000000 ? endMana - 50000 : 0
     while (mana > 0) {
-      let multiplier = Math.floor(numOfSells / 200) + 1
+      const multiplier = Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       mana -= 50
       futureTotalXP += costPerSell + multiplier * 2000000
@@ -145,6 +160,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
+              error={startVita > 10000000}
               id="Vita-start"
               label="Starting Vita"
               value={startVita}
@@ -155,6 +171,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
+              error={endVita > 10000000}
               id="Vita-end"
               label="Desired Vita"
               value={endVita}
@@ -167,16 +184,18 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
+              error={startMana > 5000000}
               id="Mana-start"
               label="Starting Mana"
               value={startMana}
             />
-            </div>
-            <div>
+          </div>
+          <div>
             <TextField
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
+              error={endMana > 5000000}
               id="Mana-end"
               label="Desired Mana"
               value={endMana}
@@ -185,23 +204,24 @@ const Calculator = props => {
         </div>
       </div>
       <div className={classes.results}>
-      <div>
+        <div>
+          {error && <Typography>{error}</Typography>}
           <Typography>
             {vitaXpNeeded > 0
               ? `Exp required for Vita: ${parseFloat(
-                  (vitaXpNeeded / 1000000000).toFixed(3)
+                  (vitaXpNeeded / 1000000000).toFixed(3),
                 )} bil`
               : null}
           </Typography>
           <Typography>
             {manaXpNeeded > 0
               ? `Exp required for Mana: ${parseFloat(
-                  (manaXpNeeded / 1000000000).toFixed(3)
+                  (manaXpNeeded / 1000000000).toFixed(3),
                 )} bil`
               : null}
           </Typography>
-       </div>
-       </div>
+        </div>
+      </div>
     </Paper>
   )
 }
