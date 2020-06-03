@@ -75,5 +75,12 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
     },
+    {
+      resolve: "gatsby-plugin-nginx-redirect",
+      options: {
+        inputConfigFile: `${__dirname}/nginx.conf`,
+        outputConfigFile: `${__dirname}/nginx.out.conf`,
+      },
+    },
   ],
 }
