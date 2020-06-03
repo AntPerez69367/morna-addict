@@ -1,16 +1,16 @@
-require('dotenv').config({
+require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-sql',
+      resolve: "gatsby-source-sql",
       options: {
-        typeName: 'Characters',
-        fieldName: 'character',
+        typeName: "Characters",
+        fieldName: "character",
         dbEngine: {
-          client: 'sqlite3',
+          client: "sqlite3",
           connection: {
             filename: process.env.DATAFILE,
           },
@@ -19,19 +19,19 @@ module.exports = {
         queryChain: x =>
           x
             .select(
-              'level as Level',
-              'class as Class',
-              'name as Name',
-              'vita as Vita',
-              'mana as Mana',
-              'totalXP as TotalXP',
-              'daily as DailyXP',
+              "level as Level",
+              "class as Class",
+              "name as Name",
+              "vita as Vita",
+              "mana as Mana",
+              "totalXP as TotalXP",
+              "daily as DailyXP"
             )
-            .from('players'),
+            .from("players"),
       },
     },
     {
-      resolve: 'gatsby-plugin-material-ui',
+      resolve: "gatsby-plugin-material-ui",
       options: {
         stylesProvider: {
           injectFirst: true,
@@ -39,37 +39,41 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'src',
+        name: "src",
         path: `${__dirname}/src/`,
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'caves',
+        name: "caves",
         path: `${__dirname}/data/`,
       },
     },
     {
-      resolve: 'gatsby-plugin-google-fonts',
+      resolve: "gatsby-plugin-google-fonts",
       options: {
-        fonts: ['roboto mono', 'muli:400,400i,700,700i'],
-        display: 'swap',
+        fonts: ["roboto mono", "muli:400,400i,700,700i"],
+        display: "swap",
       },
     },
     {
-      resolve: 'gatsby-plugin-layout',
+      resolve: "gatsby-plugin-layout",
       options: {
-        component: require.resolve('./src/components/Layout/'),
+        component: require.resolve("./src/components/Layout/"),
       },
     },
     {
-      resolve: 'gatsby-transformer-json',
+      resolve: "gatsby-transformer-json",
       options: {
-        typeName: 'caves',
+        typeName: "caves",
       },
+    },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/app/*`] },
     },
   ],
 }

@@ -83,7 +83,7 @@ const CharacterSearch = () => {
 
       {charData &&
         charData.map(char => (
-          <div key={`${char.Name}_div`}>
+          <div style={{padding: '10px'}} key={`${char.Name}_div`}>
             <CharacterDetails
               key={`${char.Name}_details`}
               open={true}

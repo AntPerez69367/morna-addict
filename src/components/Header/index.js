@@ -76,7 +76,7 @@ const Header = () => {
           src={calculator}
         />
       ),
-      path: '/calculator',
+      path: '/app/calculator',
     },
     {
       id: 2,

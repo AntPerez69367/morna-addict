@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/styles"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 import { Grid } from "@material-ui/core"
-
+import {Link} from "gatsby"
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -62,7 +62,8 @@ const CharacterDetails = props => {
             <b>XP Today</b>:{" "}
             {parseFloat((character.DailyXP / 1000000000).toFixed(3))} B
           </Typography>
-        </Grid>
+          <Link to={`/app/calculator/${character.Name}`}>Open in Calculator</Link>
+          </Grid>
       </Grid>
       {index !== length && <Divider variant="middle" />}
     </Collapse>
