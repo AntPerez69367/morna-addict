@@ -37,7 +37,7 @@ const CharacterDetails = props => {
           direction="column"
         >
           <Typography component="div" variant="subtitle2">
-            <b>Name</b>: {character.Name}
+            <b>Name</b>: {character.Name} ({character.Class})
           </Typography>
           <Typography component="div" variant="subtitle2">
             <b>Vita</b>: {character.Vita}

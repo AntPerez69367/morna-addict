@@ -31,7 +31,7 @@ def update_player(connection, player):
     cur = connection.cursor()
     cur.execute("SELECT * FROM players WHERE name = ?", (player['Character'].title(),))
     data = cur.fetchall()
-
+ 
     if len(data)==0:
 
         data = (player['Level'],player['Class'],player['Character'].title(),player['Vita'],player['Mana'],player['TotalXP'],0)    
@@ -46,13 +46,25 @@ def update_player(connection, player):
         newTotalXP = player['TotalXP']
         difference = newTotalXP - oldTotalXP
         daily = data[0][7] + difference
+        
+        # Check for Class Change
+        if player['Class'] != data[0][2]:
+            print("[{0}] Player '{1}' changed class from: {2} to {3}".format(currentTime(), player['Character'], data[0][2], player['Class']))
+            newClass = ''' UPDATE players
+                  SET class = ?
+                  WHERE id = ? '''
+            cur.execute(newClass, (player['Class'], data[0][0]))
+            connection.commit()
+
+        # Check for Stat Change
         if difference != 0:
             if daily > 0:
                 print("[{0}] Updating Character '{1}' DailyXP is now '{2}'".format(currentTime(), player['Character'], daily))
-            data = (player['Vita'], player['Mana'], newTotalXP, daily, data[0][0])
+            data = (player['Vita'], player['Mana'], player['Class'], newTotalXP, daily, data[0][0])
             sql = ''' UPDATE players
                   SET vita = ?,
                   mana = ?,
+                  class = ?,
                   totalXP = ?,
                   daily = ?
                   WHERE id = ? '''
