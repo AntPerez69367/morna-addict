@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/styles"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 import { useStaticQuery, graphql } from "gatsby"
+import Divider from "@material-ui/core/Divider"
 
 const useStyles = makeStyles({
   paper: {
@@ -32,6 +33,8 @@ const useStyles = makeStyles({
     margin: "5px",
   },
   presets: {
+    borderLeft: '1px solid black',
+    paddingLeft: '10px',
     margin: "5px",
     textAlign: "left",
   },
@@ -258,6 +261,7 @@ const Calculator = props => {
             />
           </div>
         </div>
+        
         <div className={classes.presets}>
           <div>
             <Typography
@@ -310,18 +314,26 @@ const Calculator = props => {
       </div>
       <div className={classes.results}>
         <div>
+          <Divider variant="middle" />
           {error && <Typography>{error}</Typography>}
           <Typography>
             {vitaXpNeeded > 0
-              ? `Exp required for Vita: ${parseFloat(
+              ? `Exp Required for Vita: ${parseFloat(
                   (vitaXpNeeded / 1000000000).toFixed(3)
                 )} bil`
               : null}
           </Typography>
           <Typography>
             {manaXpNeeded > 0
-              ? `Exp required for Mana: ${parseFloat(
+              ? `Exp Required for Mana: ${parseFloat(
                   (manaXpNeeded / 1000000000).toFixed(3)
+                )} bil`
+              : null}
+          </Typography>
+          <Typography>
+            {manaXpNeeded > 0 || vitaXpNeeded > 0
+              ? `Total Exp Required for Stats: ${parseFloat(
+                  ((manaXpNeeded + vitaXpNeeded) / 1000000000).toFixed(3)
                 )} bil`
               : null}
           </Typography>
