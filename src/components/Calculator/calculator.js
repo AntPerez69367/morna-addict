@@ -81,21 +81,20 @@ const Calculator = props => {
       }
     `
   )
-  useEffect(()=> {
+  useEffect(() => {
     if (charName) {
       let data = query.allCharacters.nodes.filter(
         char => char.Name.toLowerCase() === charName.toLowerCase()
       )
-  
-      setCharData(data[0])
-      setStartVita(data[0].Vita)
-      setStartMana(data[0].Mana)
+      if (data[0]) {
+        setCharData(data[0])
+        setStartVita(data[0].Vita)
+        setStartMana(data[0].Mana)
+      }
     }
   }, [])
-  
-  useEffect(()=>{
 
-  },[charData])
+  useEffect(() => {}, [charData])
 
   useEffect(() => {
     if (endVita > startVita) {
@@ -207,7 +206,8 @@ const Calculator = props => {
     <Paper>
       {charData && (
         <div className={classes.charHeader}>
-          <div style={{marginLeft: '10px'}}>Character: {charData.Name}</div></div>
+          <div style={{ marginLeft: "10px" }}>Character: {charData.Name}</div>
+        </div>
       )}
       <div className={classes.container}>
         <div className={classes.vitaContainer}>
