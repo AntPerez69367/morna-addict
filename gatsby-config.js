@@ -49,7 +49,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "caves",
-        path: `${__dirname}/data/`,
+        path: `${__dirname}/data/morna-json-data/`,
       },
     },
     {
