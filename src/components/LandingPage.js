@@ -27,17 +27,17 @@ const LandingPage = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      {show && (
-        <div>
-          <DonationBox setShow={setShow} />
-        </div>
-      )}
       <div className={classes.search}>
         <CharacterSearch />
       </div>
       <div className={classes.table}>
         <XpTable />
       </div>
+      {show && (
+        <div>
+          <DonationBox setShow={setShow} />
+        </div>
+      )}
     </div>
   )
 }
