@@ -31,12 +31,12 @@ def update_player(connection, player):
     cur = connection.cursor()
     cur.execute("SELECT * FROM players WHERE name = ?", (player['Character'].title(),))
     data = cur.fetchall()
- 
+    print(data)
     if len(data)==0:
 
-        data = (player['Level'],player['Class'],player['Character'].title(),player['Vita'],player['Mana'],player['TotalXP'],0)    
-        sql = ''' INSERT INTO players(level,class,name,vita,mana,totalXP,daily)
-                  VALUES(?,?,?,?,?,?,?) '''
+        data = (player['Level'],player['Class'],player['Character'].title(),player['Vita'],player['Mana'],player['TotalXP'],0, player['Clan'])    
+        sql = ''' INSERT INTO players(level,class,name,vita,mana,totalXP,daily,clan)
+                  VALUES(?,?,?,?,?,?,?,?) '''
         
         print("[{0}] Adding player '{1}' to the database: {2}".format(currentTime(), player['Character'], data))
         cur.execute(sql, data)
@@ -47,6 +47,16 @@ def update_player(connection, player):
         difference = newTotalXP - oldTotalXP
         daily = data[0][7] + difference
         
+        # Check fo Clan Change
+        if player['Clan'] != data[0][8]:
+            print("[{0}] Player '{1}' changed clan from: {2} to {3}".format(currentTime(), player['Character'], data[0][8], player['Clan']))
+            newClan = ''' UPDATE players
+                  SET clan = ?
+                  WHERE id = ? '''
+
+            cur.execute(newClan, (player['Class'], data[0][0]))
+            connection.commit()
+
         # Check for Class Change
         if player['Class'] != data[0][2]:
             print("[{0}] Player '{1}' changed class from: {2} to {3}".format(currentTime(), player['Character'], data[0][2], player['Class']))
@@ -101,9 +111,6 @@ def get_character_data(connection):
                 ' ', 1)[0] if len(output.split()) > 1 else ""
             player['Character'] = output.split()[-1]
 
-            # Remove Clan as it has no data
-            player.pop('Clan')
-
             # Format Vita without units
             newVita = player['Vita']
             newVita = float(newVita[:-1])
@@ -155,7 +162,8 @@ def main():
                                         vita integer,
                                         mana integer,
                                         totalXP integer,
-                                        daily integer
+                                        daily integer,
+                                        clan text NOT NULL
                                     ); """
 
     connection = create_connection(database)
