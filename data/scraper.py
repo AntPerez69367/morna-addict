@@ -54,7 +54,7 @@ def update_player(connection, player):
                   SET clan = ?
                   WHERE id = ? '''
 
-            cur.execute(newClan, (player['Class'], data[0][0]))
+            cur.execute(newClan, (player['Clan'], data[0][0]))
             connection.commit()
 
         # Check for Class Change

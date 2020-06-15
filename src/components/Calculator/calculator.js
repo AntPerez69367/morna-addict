@@ -33,8 +33,8 @@ const useStyles = makeStyles({
     margin: "5px",
   },
   presets: {
-    borderLeft: '1px solid black',
-    paddingLeft: '10px',
+    borderLeft: "1px solid black",
+    paddingLeft: "10px",
     margin: "5px",
     textAlign: "left",
   },
@@ -154,55 +154,33 @@ const Calculator = props => {
   }
 
   const calculateVita = () => {
-    let currentTotalXP = 0
-    let futureTotalXP = 0
+    let totalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
-    let vita = startVita <= 10000000 ? startVita - 100000 : 0
-    while (vita > 0) {
-      const multiplier = Math.floor(numOfSells / 200) + 1
+    let sVita = Math.floor(startVita / 100) * 100
+    let eVita = Math.floor(endVita / 100) * 100
+    while (eVita > sVita) {
+      const multiplier = eVita <= 100000 ? 0 : Math.floor(numOfSells / 200) + 1
       numOfSells += 1
-      vita -= 100
-      currentTotalXP += costPerSell + multiplier * 2000000
+      eVita -= 100
+      totalXP += costPerSell + (multiplier * 2000000)      
     }
-
-    numOfSells = 0
-    costPerSell = 20000000
-    vita = endVita <= 10000000 ? endVita - 100000 : 0
-    while (vita > 0) {
-      const multiplier = Math.floor(numOfSells / 200) + 1
-      numOfSells += 1
-      vita -= 100
-      futureTotalXP += costPerSell + multiplier * 2000000
-    }
-
-    setVitaXpNeeded(futureTotalXP - currentTotalXP)
+    setVitaXpNeeded(totalXP)
   }
 
   const calculateMana = () => {
-    let currentTotalXP = 0
-    let futureTotalXP = 0
+    let totalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
-    let mana = startMana <= 5000000 ? startMana - 50000 : 0
-    while (mana > 0) {
-      const multiplier = Math.floor(numOfSells / 200) + 1
+    let sMana = Math.floor(startMana/10) * 10
+    let eMana = Math.floor(endMana/ 10) * 10
+    while (eMana > sMana) {
+      const multiplier = eMana <= 50000 ? 0 : Math.floor(numOfSells / 200) + 1
       numOfSells += 1
-      mana -= 50
-      currentTotalXP += costPerSell + multiplier * 2000000
+      eMana -= 50
+      totalXP += costPerSell + multiplier * 2000000
     }
-
-    numOfSells = 0
-    costPerSell = 20000000
-    mana = endMana <= 5000000 ? endMana - 50000 : 0
-    while (mana > 0) {
-      const multiplier = Math.floor(numOfSells / 200) + 1
-      numOfSells += 1
-      mana -= 50
-      futureTotalXP += costPerSell + multiplier * 2000000
-    }
-
-    setManaXpNeeded(futureTotalXP - currentTotalXP)
+    setManaXpNeeded(totalXP)
   }
 
   return (
@@ -261,7 +239,7 @@ const Calculator = props => {
             />
           </div>
         </div>
-        
+
         <div className={classes.presets}>
           <div>
             <Typography
