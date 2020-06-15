@@ -154,33 +154,56 @@ const Calculator = props => {
   }
 
   const calculateVita = () => {
-    let totalXP = 0
+    let currentTotalXP = 0
+    let futureTotalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
     let sVita = Math.floor(startVita / 100) * 100
+    
+    while (sVita > 0) {
+      const multiplier = sVita <= 100000 ? 0 : Math.floor(numOfSells / 200) + 1
+      numOfSells += 1
+      sVita -= 100
+      currentTotalXP += costPerSell + (multiplier * 2000000)      
+    }
+
     let eVita = Math.floor(endVita / 100) * 100
-    while (eVita > sVita) {
+    numOfSells = 0
+
+    while (eVita > 0) {
       const multiplier = eVita <= 100000 ? 0 : Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       eVita -= 100
-      totalXP += costPerSell + (multiplier * 2000000)      
+      futureTotalXP += costPerSell + (multiplier * 2000000)      
     }
-    setVitaXpNeeded(totalXP)
+
+    setVitaXpNeeded(futureTotalXP - currentTotalXP)
   }
 
   const calculateMana = () => {
-    let totalXP = 0
+    let currentTotalXP = 0
+    let futureTotalXP = 0
     let numOfSells = 0
     let costPerSell = 20000000
     let sMana = Math.floor(startMana/10) * 10
+
+    while (sMana > 0) {
+      const multiplier = sMana <= 50000 ? 0 : Math.floor(numOfSells / 200) + 1
+      numOfSells += 1
+      sMana -= 50
+      currentTotalXP += costPerSell + multiplier * 2000000
+    }
+    
     let eMana = Math.floor(endMana/ 10) * 10
-    while (eMana > sMana) {
+    numOfSells = 0
+    
+    while (eMana > 0) {
       const multiplier = eMana <= 50000 ? 0 : Math.floor(numOfSells / 200) + 1
       numOfSells += 1
       eMana -= 50
-      totalXP += costPerSell + multiplier * 2000000
+      futureTotalXP += costPerSell + multiplier * 2000000
     }
-    setManaXpNeeded(totalXP)
+    setManaXpNeeded(futureTotalXP - currentTotalXP)
   }
 
   return (
