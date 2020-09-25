@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography"
 import { useStaticQuery, graphql } from "gatsby"
 import Divider from "@material-ui/core/Divider"
 
+const MAX_VITA = 100000000
+const MAX_MANA = 50000000
 const useStyles = makeStyles({
   paper: {
     width: "50%",
@@ -101,7 +103,7 @@ const Calculator = props => {
 
   useEffect(() => {
     if (endVita > startVita) {
-      if (startVita > 10000000 || endVita > 10000000) {
+      if (startVita > MAX_VITA || endVita > MAX_VITA) {
         setError(
           "Invalid entry for Vita. Maximum vita currently limited to 10mil."
         )
@@ -116,7 +118,7 @@ const Calculator = props => {
 
   useEffect(() => {
     if (endMana > startMana) {
-      if (startMana > 5000000 || endMana > 5000000) {
+      if (startMana > MAX_MANA || endMana > MAX_MANA) {
         setError(
           "Invalid entry for Mana. Maximum Mana currently limited to 5mil."
         )
@@ -220,7 +222,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
-              error={startVita > 10000000}
+              error={startVita > 100000000}
               id="Vita-start"
               label="Starting Vita"
               value={startVita}
@@ -231,7 +233,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
-              error={endVita > 10000000}
+              error={endVita > 100000000}
               id="Vita-end"
               label="Desired Vita"
               value={endVita}
@@ -244,7 +246,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
-              error={startMana > 5000000}
+              error={startMana > MAX_MANA}
               id="Mana-start"
               label="Starting Mana"
               value={startMana}
@@ -255,7 +257,7 @@ const Calculator = props => {
               inputProps={textInputProps}
               className={classes.input}
               onChange={handleChange}
-              error={endMana > 5000000}
+              error={endMana > MAX_MANA}
               id="Mana-end"
               label="Desired Mana"
               value={endMana}
@@ -309,6 +311,33 @@ const Calculator = props => {
               }}
             >
               Oh San
+            </Typography>
+            <Typography
+              className={classes.link}
+              onClick={() => {
+                setEndVita(5120000)
+                setEndMana(2560000)
+              }}
+            >
+              Yook San
+            </Typography>
+            <Typography
+              className={classes.link}
+              onClick={() => {
+                setEndVita(10240000)
+                setEndMana(5120000)
+              }}
+            >
+              Chil San
+            </Typography>
+            <Typography
+              className={classes.link}
+              onClick={() => {
+                setEndVita(20480000)
+                setEndMana(10240000)
+              }}
+            >
+              Pal San
             </Typography>
           </div>
         </div>
