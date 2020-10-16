@@ -60,9 +60,18 @@ const CharacterSearch = () => {
       return null
     }
 
-    let data = query.allCharacters.nodes.filter(char =>
-      char.Name.toLowerCase().includes(character.toLowerCase()),
-    )
+    
+
+    let data = query.allCharacters.nodes.filter(char => {
+
+      if (character.toLowerCase() === "zizi") {
+        return char.Name.toLowerCase().includes('sitri')
+      } else if (character.toLowerCase() === 'le placard'){
+        return char.Name.toLowerCase().includes('gatsby')
+      } else {
+        return char.Name.toLowerCase().includes(character.toLowerCase())
+      }
+    })
 
     if (data.length > 0) {
       setCharData(data)

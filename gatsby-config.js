@@ -25,7 +25,8 @@ module.exports = {
               "vita as Vita",
               "mana as Mana",
               "totalXP as TotalXP",
-              "daily as DailyXP"
+              "daily as DailyXP",
+              "clan as Clan"
             )
             .from("players"),
       },

@@ -4,6 +4,7 @@ import CharacterSearch from "../components/CharacterSearch/CharacterSearch"
 import { makeStyles } from "@material-ui/core/styles"
 import DonationBox from "./DonationBox"
 import { DonationContext } from "../context/DonationContext"
+import ClanRankings from '../components/ClanRankings'
 
 const useStyles = makeStyles({
   root: {

@@ -5,6 +5,7 @@ import View from "../View"
 import { makeStyles } from "@material-ui/styles"
 import PropTypes from "prop-types"
 import DonationContextProvider from "../../context/DonationContext"
+const _ = require('lodash');
 
 const useStyles = makeStyles({
   root: {
